@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule .* - [S=3]
+RewriteRule ^([^./]+)/?$ index.php?page=$1&%{QUERY_STRING} [NC,L]
+RewriteRule ^logout/?$ logout/index.php?page=$1&%{QUERY_STRING} [NC,L]
+RewriteRule ^([^./]+)/([^./]+)/?$ index.php?page=$1&category=$2&%{QUERY_STRING} [NC,L]
+RewriteRule ^([^./]+)/([^./]+)/([^./]+)/?$ index.php?page=$1&category=$2&task_id=$3&%{QUERY_STRING} [NC,L]

@@ -1,0 +1,7 @@
+*.rar
+*.zip
+*.html
+static/
+tabler/
+dist/img/
+dist/libs/

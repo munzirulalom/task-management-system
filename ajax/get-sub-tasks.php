@@ -65,6 +65,7 @@ echo $outputDone;
 
 echo '<div class="my-5 dropdown-divider"></div>';
 
+//Attachment Listing
 $table = get_table_name('attachment');
 $stmt = $db->prepare("SELECT * FROM `{$table}` WHERE task_id = '{$task_id}'");
 $stmt->execute();
@@ -72,7 +73,7 @@ $stmt->execute();
 echo '<h5 class="card-title">Attachment</h5>';
 echo '<ul>';
 while ($file = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-	echo'<li><a href="'. SITE_URL.'/upload/'. $file['attachment_name'] .'" target="_blank">'. $file['attachment_name'] .'</a></li>';
+	echo'<li><a href="'. SITE_URL .'/upload/'. $file['attachment_name'] .'" target="_blank">'. $file['attachment_name'] .'</a></li>';
 }
 echo '</ul>';
 
@@ -89,7 +90,7 @@ echo '</form>';
 echo '<div class="my-5 dropdown-divider"></div>';
 
 if ( !is_project_admin($cat_id) ) {
-	//Does not display tast edit form if the user are not admin
+	//Does not display task edit form if the user are not admin
 	return;
 }
 

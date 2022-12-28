@@ -13,23 +13,14 @@ require_once("template-parts/_add-project-modal.php");
           <div class="row text-center align-items-center flex-row-reverse">
             <div class="col-lg-auto ms-lg-auto">
               <ul class="list-inline list-inline-dots mb-0">
-                <li class="list-inline-item"><a href="#" class="link-secondary">Documentation</a></li>
-                <li class="list-inline-item"><a href="#" class="link-secondary">License</a></li>
-                <li class="list-inline-item"><a href="#" target="_blank" class="link-secondary" rel="noopener">Source code</a></li>
-                <li class="list-inline-item">
-                  <a href="#" target="_blank" class="link-secondary" rel="noopener">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink icon-filled icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
-                    Sponsor
-                  </a>
-                </li>
+                <li class="list-inline-item"><a href="https://github.com/munzirulalom/" target="_blank" class="link-secondary" rel="noopener">Source code</a></li>
               </ul>
             </div>
             <div class="col-12 col-lg-auto mt-3 mt-lg-0">
               <ul class="list-inline list-inline-dots mb-0">
                 <li class="list-inline-item">
                   Copyright &copy; 2022
-                  <a href="." class="link-secondary">Tabler</a>.
+                  <a href="." class="link-secondary">Team 5</a>.
                   All rights reserved.
                 </li>
               </ul>
@@ -40,16 +31,16 @@ require_once("template-parts/_add-project-modal.php");
     </div>
   </div>
 
-    <!-- Tabler Core -->
-  <script src="<?php echo SITE_URL ?>/dist/js/tabler.min.js"></script>
-  <script src="<?php echo SITE_URL ?>/dist/js/demo.min.js"></script>
+    <!-- Bootstrap Core -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="<?php echo SITE_URL ?>/dist/js/bootstrap.min.js"></script>
+  <script src="<?php echo SITE_URL ?>/dist/js/bootstrap-demo.min.js"></script>
 
   <!-- Custom -->
   <script src="<?php echo SITE_URL ?>/dist/js/form.js"></script>
   <?php 
   if ( isset($_REQUEST['category']) ) {
-    echo '<script src="'. SITE_URL.'/dist/js/task.js"></script>';
+    echo '<script src="'. SITE_URL .'/dist/js/task.js"></script>';
   }
    ?>
   

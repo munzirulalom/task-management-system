@@ -84,6 +84,16 @@ function get_page_title(){
 		$title['sub'] = 'Task List';
 		break;
 
+		case 'assigned' :
+		$title['main'] = "Assigned Task";
+		$title['sub'] = 'Task assigned to you';
+		break;
+
+		case 'chat' :
+		$title['main'] = "Chat";
+		$title['sub'] = 'Communicate with other user';
+		break;
+
 		case 'profile' :
 		$title['main'] = get_user_name( (int) $_SESSION['id'] );
 		$title['sub'] = 'Profile';
@@ -152,7 +162,11 @@ function send_mail($to, $subject, $message){
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
 	        'content' => http_build_query($data)
-	    )
+		),
+		'ssl' =>array(
+			'verify_peer'	=> false,
+			'verify_peer_name' =>false,
+		)
 	);
 	$context  = stream_context_create($options);
 	$result = file_get_contents($url, false, $context);
@@ -175,11 +189,11 @@ function get_single_value( $table, $columns, $value ) {
 /************************************************************* USER ******************************************************************/
 
 //Reegister New User
-function register_user( $name, $email, $pass ) {
+function register_user( $name, $email, $pass, $org_code ) {
 	global $db;
 	$table = get_table_name('user');
 
-	$stmt = $db->prepare("INSERT INTO `{$table}` (user_name, user_email, user_password) VALUES('{$name}', '{$email}', '{$pass}')");
+	$stmt = $db->prepare("INSERT INTO `{$table}` (user_name, user_email, user_password, org_code) VALUES('{$name}', '{$email}', '{$pass}', '{$org_code}')");
 	$stmt->execute();
 
 	header('Location: '.SITE_URL);
@@ -276,7 +290,7 @@ function check_auth_code( $id, $code ) {
 function send_password_recovery( $email ){
 	$id = get_user_id( $email );
 	$code = generate_auth_code( $id );
-	$token = secure_str( date("Y-m-d H:i:s"), 'enc');
+	$token = secure_str( date("Y-m-d H:i:s"), 'enc', 30);
 
 	$link = SITE_URL."?action=new-password";
 	$link .= "&uid=".secure_str($id);
@@ -304,14 +318,18 @@ function check_login( $email, $pass ) {
 	global $db;
 	$table = get_table_name('user');
 
-	$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE user_email='{$email}' AND user_password='{$pass}'");
-	$stmt->execute();
+	$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE user_email=:email AND user_password=:password");
+	$stmt->execute(['email'	=> $email, 'password' => $pass]);
 	$result = $stmt->rowCount();
 
 	if ( $result == 1 ) {
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) 
 		{
 			$_SESSION['id'] = (int)$row['user_id'];
+
+			//Change user active status
+			$query = $db->prepare("UPDATE `{$table}` SET status = 'Active now' WHERE user_id = '{$row['user_id']}'");
+			$query->execute();
 		}
 		header('Location: '.SITE_URL);
 		exit;
@@ -392,16 +410,18 @@ function get_user_email( $id = false ) {
 }
 
 //Get Current User Image
-function get_user_image() {
-	/*$id = $_SESSION['id'];
+function get_user_image( $userID ){
+	if (!isset($userID)) return;
+
 	global $db;
+	$table = get_table_name('user');
 
-	$stmt = $db->prepare("SELECT name FROM user WHERE id = $id");
+	$stmt = $db->prepare("SELECT img FROM `user` WHERE user_id = '{$userID}'");
 	$stmt->execute();
+	$file_name = $stmt->fetchColumn();
+	$result = SITE_URL ."/upload/" . $file_name;
 
-	echo sprintf($stmt->fetchColumn());*/
-
-	echo "https://picsum.photos/1000/";
+	return $result;
 }
 
 //Get user meta
@@ -510,6 +530,34 @@ function is_project_admin( $arg = null, $id = null){
 	$result = (int)$stmt->fetchColumn();
 
 	if ( $result == $user_id ) {
+		return true;
+	}
+
+	return false;
+}
+
+//Check Task Assigned User
+function is_assigned( $taskID, $userID=null ){
+	global $db;
+
+	$taskID = (int) $taskID;
+
+	if ( isset($userID) ) {
+		$userID = (int) $user_id;
+	} else {
+		$userID = (int) $_SESSION['id'];
+	}
+
+	$table = get_table_name('task');
+
+	$stmt = $db->prepare("SELECT COUNT(task_id) FROM `{$table}` WHERE task_id = :taskID AND assigned_to = :assignedID");
+	$stmt->execute([
+		'taskID'		=> $taskID,
+		'assignedID'	=> $userID
+	]);
+	$result = (int)$stmt->fetchColumn();
+
+	if ( $result === 1 ) {
 		return true;
 	}
 

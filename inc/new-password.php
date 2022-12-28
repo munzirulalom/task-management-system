@@ -60,7 +60,7 @@ if (isset($_POST['submit']))
           <div class="card-body">
             <h2 class="card-title text-center mb-4">Change password</h2>
             <div class="text-center mb-4">
-              <span class="avatar avatar-xl mb-3" style="background-image: url(./static/avatars/000m.jpg)"></span>
+              <span class="avatar avatar-xl mb-3" style="background-image: url('<?php echo get_user_image( secure_str( $user_id, "dec") ); ?>')"></span>
               <h3><?php echo get_user_name( secure_str( $user_id, "dec" ) ); ?></h3>
               <input type="hidden" class="form-control" name="id" value="<?php echo $user_id ?>" autocomplete="off" required>
             </div>

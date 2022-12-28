@@ -1,4 +1,4 @@
-var root = document.location.origin+"/cse200";
+var root ="../../";
 taskList = document.querySelector(".task-list");
 subtaskList = document.querySelector(".sub-task-list");
 assignedList = document.querySelector(".assigned-user-list");
@@ -189,7 +189,7 @@ function checkTask( task_id ){
       }
     }
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send("task_id=" + task_id + "&status=" + true);
+    xhr.send("cat_id=" + cat_id + "&task_id=" + task_id + "&status=" + true);
 
   } else {
    console.log("Un-Checked " + task_id);
@@ -205,7 +205,7 @@ function checkTask( task_id ){
       }
     }
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send("task_id=" + task_id + "&status=" + false);
+    xhr.send("cat_id=" + cat_id + "&task_id=" + task_id + "&status=" + false);
   }
 }
 
@@ -226,7 +226,7 @@ function checkSubTask( subtask_id, task_id ){
       }
     }
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send("subtask_id=" + subtask_id + "&status=" + true);
+    xhr.send("cat_id=" + cat_id + "&subtask_id=" + subtask_id + "&status=" + true);
 
   } else {
    console.log("Un-Checked " + subtask_id);

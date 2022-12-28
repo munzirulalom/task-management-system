@@ -5,10 +5,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 <div class="nav-item dropdown">
   <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-    <span class="avatar avatar-sm" style="background-image: url(<?php echo SITE_URL ?>/static/avatars/000m.jpg)"></span>
+    <span class="avatar avatar-sm" style="background-image: url('<?php echo get_user_image( $_SESSION['id'] ); ?>')"></span>
     <div class="d-none d-xl-block ps-2">
       <div><?php echo get_user_name(); ?></div>
-      <div class="mt-1 small text-muted">UI Designer</div>
+      <div class="mt-1 small text-muted">Developer</div>
     </div>
   </a>
   <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

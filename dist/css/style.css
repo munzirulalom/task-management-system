@@ -5,3 +5,120 @@
 	width: 1rem;
 	height: 1rem;
 }
+
+header.navbar {
+	z-index: 999;
+}
+
+/* Bootstrap Rewrite */
+.offcanvas-end{
+	width: 50%;
+}
+@media screen and (max-width:1080px) {
+	.offcanvas-end{
+		width: 80%;
+	}
+}
+@media screen and (max-width:720px){
+	.offcanvas-end{
+		width: 100%;
+	}
+}
+
+/* Light Theme - Background Animation */
+
+.theme-light .page{
+	background: linear-gradient(320deg,#00b6fd4d,#97ff0008,#ffcc6a1c,#8001ff3d);
+	background-size: 150% 150%;
+	animation: gradient 15s ease infinite;
+	height: 100%;
+}
+/*.theme-light .modal-content{
+	background: linear-gradient(320deg,#00b6fd4d,#97ff0008,#ffcc6a1c,#8001ff3d);
+	background-size: 150% 150%;
+	animation: gradient 15s ease infinite;
+	backdrop-filter: blur(4px);
+}*/
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	25% {
+		background-position: 50% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	75% {
+		background-position: 50% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.navbar{
+	background: transparent;
+	color: var(--tblr-dark);
+}
+/* Dark Theme */
+.theme-dark .navbar{
+	background: transparent;
+	backdrop-filter: blur(4px);
+}
+.navbar .navbar-nav .nav-link{
+	color: var(--tblr-dark);
+}
+.navbar .navbar-nav .nav-link:hover{
+	color: var(--tblr-blue);
+}
+
+aside.navbar{
+	/* margin: 30px 0 30px 30px; */
+	background: rgba(255, 255, 255, 0.15);
+	/* border-radius: 16px; */
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(5.5px);
+	-webkit-backdrop-filter: blur(5.5px);
+}
+/* @media screen and (max-width: 1450px){
+	aside.navbar{
+		margin: 8px 0 8px 8px;
+	}
+}
+@media screen and (min-width: 1500px){
+	header.navbar{
+		margin-left: 0 !important;
+	}
+}*/
+@media screen and (max-width: 720px){
+	aside.navbar{
+		min-height: auto;
+	}
+}
+
+/* Blur Only on Light Theme */
+
+.theme-light .card, .theme-light .task-list .input-group, .theme-light .sub-task-list .form-selectgroup-label, .theme-light .offcanvas input, .theme-light .chat input, .theme-light .offcanvas textarea, .theme-light .modal-dialog input, .theme-light .modal-dialog textarea, .theme-light .modal-content, .theme-light header.navbar, .theme-light .modal-header, .theme-light .form-selectgroup-label  {
+	border: none;
+	backdrop-filter: blur(5.5px);
+	background: rgba(255, 255, 255, 0.3);
+	background: linear-gradient(
+		to right bottom,
+		rgba(255, 255, 255, 0.7),
+		rgba(255, 255, 255, 0.3)
+	);
+}
+
+.theme-light .offcanvas {
+	background: linear-gradient(330deg, rgba(116, 0, 255, 0.1), #00dfff33);
+	background: linear-gradient(320deg,#00b6fd4d,#97ff0008,#ffcc6a1c,#8001ff3d);
+	background: linear-gradient( to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3) );
+	backdrop-filter: blur(15px);
+}
+
+.theme-light .dropdown-menu{
+	backdrop-filter: blur(5.5px);
+	background: rgba(255, 255, 255, 0.3);
+	background: linear-gradient( to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3) );
+}

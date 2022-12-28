@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
   <title>Task Management System</title>
   <link rel="icon" href="<?php echo SITE_URL ?>/static/fav.ico" sizes="64x64">
   <!-- CSS files -->
-  <link href="<?php echo SITE_URL ?>/dist/css/tabler.min.css" rel="stylesheet"/>
-  <link href="<?php echo SITE_URL ?>/dist/css/tabler-flags.min.css" rel="stylesheet"/>
-  <link href="<?php echo SITE_URL ?>/dist/css/tabler-payments.min.css" rel="stylesheet"/>
-  <link href="<?php echo SITE_URL ?>/dist/css/tabler-vendors.min.css" rel="stylesheet"/>
+  <link href="<?php echo SITE_URL ?>/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="<?php echo SITE_URL ?>/dist/css/bootstrap-vendors.min.css" rel="stylesheet"/>
   <link href="<?php echo SITE_URL ?>/dist/css/demo.min.css" rel="stylesheet"/>
+  <link href="<?php echo SITE_URL ?>/dist/css/style.css" rel="stylesheet"/>
+  
 </head>
 <body  class="d-flex flex-column overflow-auto">
   <div class="page page-center">

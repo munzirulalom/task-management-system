@@ -1,5 +1,4 @@
-<?php 
-session_start();
+<?php
 define('ABSPATH', TRUE);
 
 /* Define SITE HOME url */
@@ -9,6 +8,6 @@ if (($_SERVER['HTTP_HOST']) == 'cse328.local') {
 	define('SITE_URL', '#');
 }
 
-//Connect Database
-require_once(dirname(__DIR__)."/db/connection.php");
-require_once(dirname(__DIR__).'/inc/function.php');
+require_once( dirname(__DIR__,2) . "/db/connection.php" );
+require_once( dirname(__DIR__,2) . "/inc/function.php" );
+?>

@@ -1,7 +1,6 @@
-var root = document.location.origin+"/cse200";
+var root = "../../";
 projectList = document.querySelector(".task-project-list");
 notificationList = document.querySelector(".notification-list");
-incoming_id = null;
 
 $(document).ready(function () {
   addProject();
@@ -56,7 +55,7 @@ function getProjectList(){
     }
   }
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhr.send("incoming_id="+incoming_id);
+  xhr.send();
 }
 
 function deleteProject( project_id ){

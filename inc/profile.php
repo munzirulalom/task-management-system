@@ -13,6 +13,9 @@ if ( !isset($_REQUEST['page']) ) {
 	exit;
 }
 
+//Get user imformation
+$user = get_user_meta();
+
 $error_email = $error_pass = null;
 
 if (isset($_POST['submit'])) {
@@ -21,6 +24,21 @@ if (isset($_POST['submit'])) {
   //$email = (string) $_POST['email'];
   $password = (string) $_POST['password'];
   $password2 = (string) $_POST['password2'];
+
+  if ( isset( $_FILES['profile_img']) AND $_FILES['profile_img']['size'] > 0 ) {
+	//Remove previous profile image if any
+	if ( !empty($user['img']) AND $user['img'] != 'user.png' ) {
+		unlink(dirname(__DIR__,1) ."/upload/" . $user['img'] );
+	}
+
+	//update user profile image
+	$newFileName = pathinfo( $_FILES['profile_img']['tmp_name'], PATHINFO_FILENAME );
+	$profile_img_id = add_attachment( 'profile_img', $newFileName );
+	$table = get_table_name('user');
+
+	$stmt = $db->prepare("UPDATE `{$table}` SET img = '{$profile_img_id}' WHERE user_id = '{$user['user_id']}'");
+	$stmt->execute();
+  }
 
   //Check Confirm Password
   if ( !empty($password) AND !empty($password2) ) {
@@ -43,7 +61,7 @@ $user = get_user_meta();
 
 <div class="container-xl">
 	<div class="row row-deck row-cards">
-<form class="card card-md" method="POST">
+<form class="card card-md" method="POST" enctype="multipart/form-data">
 	<div class="card-body">
 		<h2 class="card-title text-center mb-4">Edit profile</h2>
 		<div class="mb-3">
@@ -54,6 +72,10 @@ $user = get_user_meta();
 			<label class="form-label required">Email address</label>
 			<input type="email" class="form-control <?php echo isset($error_email) ? 'is-invalid' : '' ?>" name="email" value="<?php echo $user['user_email'] ?>" placeholder="Enter email" disabled>
 			<?php echo isset($error_email) ? '<div class="invalid-feedback">Email address already exists</div>' : '' ?>
+		</div>
+		<div class="mb-3">
+			<label class="form-label required">Profile Image</label>
+			<input class="form-control" type="file" name="profile_img">
 		</div>
 		<div class="mb-3">
 			<label class="form-label">Password</label>

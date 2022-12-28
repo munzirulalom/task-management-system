@@ -4,10 +4,9 @@ session_start();
 /* Define ABSPATH */
 define('ABSPATH', TRUE);
 
-
 /* Define SITE HOME url */
-if (($_SERVER['HTTP_HOST']) == 'localhost') {
-	define('SITE_URL', 'http://localhost/cse200');
+if (($_SERVER['HTTP_HOST']) == 'cse328.local') {
+	define('SITE_URL', 'http://cse328.local');
 }else{
 	define('SITE_URL', '#');
 }
@@ -24,6 +23,14 @@ if ( isset($_SESSION['id']) == 1 AND isset( $_GET['page'] ) ) {
 		
 		case 'task' :
 		require_once('inc/tasks.php');
+		break;
+		
+		case 'assigned' :
+		require_once('inc/assigned_to_me.php');
+		break;
+		
+		case 'chat' :
+		require_once('chat/users.php');
 		break;
 		
 		case 'profile' :

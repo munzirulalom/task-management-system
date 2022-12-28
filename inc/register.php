@@ -14,6 +14,7 @@ if (isset($_POST['submit']))
 {
   $name = (string) $_POST['name'];
   $email = (string) $_POST['email'];
+  $org_code = (string) ($_POST['org-code'] == '') ? null : $_POST['org-code'];
   $password = (string) $_POST['password'];
   $password2 = (string) $_POST['password2'];
 
@@ -23,7 +24,7 @@ if (isset($_POST['submit']))
 
     //Check Email
     if (check_duplicate('user','user_email',$email) == false) {
-      register_user( $name, $email, $pass );
+      register_user( $name, $email, $pass, $org_code );
     } else {
       $error_email = 1;
     }
@@ -50,6 +51,10 @@ if (isset($_POST['submit']))
               <label class="form-label required">Email address</label>
               <input type="email" class="form-control <?php echo isset($error_email) ? 'is-invalid' : '' ?>" name="email" placeholder="Enter email" required>
               <?php echo isset($error_email) ? '<div class="invalid-feedback">Email address already exists</div>' : '' ?>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Org Code</label>
+              <input type="text" class="form-control" name="org-code" placeholder="Enter Organization Code" autocomplete="off">
             </div>
             <div class="mb-3">
               <label class="form-label required">Password</label>

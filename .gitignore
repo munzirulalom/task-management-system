@@ -1,6 +1,7 @@
 *.rar
 *.zip
 *.html
+.DS_Store
 static/
 tabler/
 dist/img/

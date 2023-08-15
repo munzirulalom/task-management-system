@@ -19,8 +19,8 @@ require_once("template-parts/_add-project-modal.php");
             <div class="col-12 col-lg-auto mt-3 mt-lg-0">
               <ul class="list-inline list-inline-dots mb-0">
                 <li class="list-inline-item">
-                  Copyright &copy; 2022
-                  <a href="." class="link-secondary">Team 5</a>.
+                  Copyright &copy; 2023
+                  <a href="" class="link-secondary">Trodev</a>.
                   All rights reserved.
                 </li>
               </ul>

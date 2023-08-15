@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 										<span class="form-selectgroup-check"></span>
 									</span>
 									<span class="form-selectgroup-label-content">
-										<span class="form-selectgroup-title strong mb-1">Simple</span>
+										<span class="form-selectgroup-title strong mb-1">Personal</span>
 										<span class="d-block text-muted">For personal usages. Team collaborations are not possible</span>
 									</span>
 								</span>
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 										<span class="form-selectgroup-check"></span>
 									</span>
 									<span class="form-selectgroup-label-content">
-										<span class="form-selectgroup-title strong mb-1">Advanced</span>
+										<span class="form-selectgroup-title strong mb-1">Team Project</span>
 										<span class="d-block text-muted">For team. Team collaborations are possible</span>
 									</span>
 								</span>

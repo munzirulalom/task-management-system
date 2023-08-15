@@ -6,8 +6,10 @@ $output = '';
 $table = get_table_name('category_user');
 $cat_id = (int) secure_str( (string) $_POST['category_id'], 'dec' );
 
-$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE cat_id = {$cat_id}");
-$stmt->execute();
+$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE cat_id = :cat_id");
+$stmt->execute(array(
+	":cat_id" => $cat_id
+));
 
 while ($user = $stmt->fetch(PDO::FETCH_ASSOC) ) {
 	if ( is_project_admin($cat_id, $user["user_id"]) ) {

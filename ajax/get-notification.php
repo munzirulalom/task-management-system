@@ -6,8 +6,10 @@ $output = '';
 $table = get_table_name('notification');
 $user_id = (int)$_SESSION['id'];
 
-$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE user_id = {$user_id} ORDER BY created_on DESC LIMIT 5");
-$stmt->execute();
+$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE user_id = :user_id ORDER BY created_on DESC LIMIT 5");
+$stmt->execute(array(
+    ":user_id" => $user_id
+));
 
 while ( $notification = $stmt->fetch(PDO::FETCH_ASSOC) ) {
 $output .= '<div class="list-group-item">';

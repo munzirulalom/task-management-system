@@ -9,14 +9,21 @@ $user_id = (int) $_SESSION['id'];
 
 $filename = $_FILES['file']['name'].'-'. secure_str( date("Y-m-d-H:i:s") );
 
-$stmt = $db->prepare("INSERT INTO `{$table}` (attachment_name, task_id, user_id) VALUES('{$filename}', '{$task_id}', '{$user_id}')");
-$stmt->execute();
+$stmt = $db->prepare("INSERT INTO `{$table}` (attachment_name, task_id, user_id) VALUES(:filename, :task_id, :user_id)");
+$stmt->execute(array(
+    ":filename" => $filename,
+    ":task_id" => $task_id,
+    ":user_id" => $user_id
+));
 $id = $db->lastInsertId();
 
 $filename = add_attachment('file', $id);
 
-$stmt = $db->prepare("UPDATE `{$table}` SET attachment_name = '{$filename}' WHERE attachment_id = '{$id}'");
-$stmt->execute();
+$stmt = $db->prepare("UPDATE `{$table}` SET attachment_name = :filename WHERE attachment_id = :id");
+$stmt->execute(array(
+    ":filename" => $filename,
+    ":id" => $id
+));
 
 header("Location: ".SITE_URL."/task/".$cat_id);
 exit();

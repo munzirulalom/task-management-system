@@ -27,13 +27,20 @@ $type = (int) $_POST['project_type'];
 $created_by = (int) $_SESSION['id'];
 
 //Inster Data Into Task Catagory Table
-$stmt = $db->prepare("INSERT INTO `{$table}` (cat_title, cat_type, created_by) VALUES('{$name}', '{$type}', '{$created_by}')");
-$stmt->execute();
+$stmt = $db->prepare("INSERT INTO `{$table}` (cat_title, cat_type, created_by) VALUES(:name, :type, :created_by)");
+$stmt->execute(array(
+    ":name" => $name,
+    ":type" => $type,
+    ":created_by" => $created_by
+));
 $category_id = $db->lastInsertId();
 
 //Insert Data To User and Catagory Relations Table
 $table = get_table_name('category_user');
-$stmt = $db->prepare("INSERT INTO `{$table}` (user_id, cat_id) VALUES('{$created_by}', '{$category_id}')");
-$stmt->execute();
+$stmt = $db->prepare("INSERT INTO `{$table}` (user_id, cat_id) VALUES(:created_by, :category_id)");
+$stmt->execute(array(
+    ":created_by" => $created_by,
+    ":category_id" => $category_id
+));
 
 exit;

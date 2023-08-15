@@ -14,21 +14,29 @@ $filetable = get_table_name('attachment');
 
 if ( $status === true) {
 	//Delete Task
-	$stmt = $db->prepare("DELETE FROM `{$table}` WHERE task_id = '{$task_id}'");
-	$stmt->execute();
+	$stmt = $db->prepare("DELETE FROM `{$table}` WHERE task_id = :task_id");
+	$stmt->execute(array(
+		":task_id" => $task_id
+	));
 
 	//Delete File
-	$stmt = $db->prepare("DELETE FROM `{$filetable}` WHERE task_id = '{$task_id}'");
-	$stmt->execute();
+	$stmt = $db->prepare("DELETE FROM `{$filetable}` WHERE task_id = :task_id");
+	$stmt->execute(array(
+		":task_id" => $task_id
+	));
 
 	//Delete Sub Task
-	$stmt = $db->prepare("DELETE FROM `{$subtable}` WHERE task_id = '{$task_id}'");
-	$stmt->execute();
+	$stmt = $db->prepare("DELETE FROM `{$subtable}` WHERE task_id = :task_id");
+	$stmt->execute(array(
+		":task_id" => $task_id
+	));
 
 	exit;
 } elseif ( $status === false ){
-	$stmt = $db->prepare("UPDATE `{$table}` SET task_status = 0 WHERE task_id = '{$task_id}'");
-	$stmt->execute();
+	$stmt = $db->prepare("UPDATE `{$table}` SET task_status = 0 WHERE task_id = :task_id");
+	$stmt->execute(array(
+		":task_id" => $task_id
+	));
 
 	exit;
 } else{

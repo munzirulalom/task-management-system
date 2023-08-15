@@ -8,8 +8,10 @@ $table = get_table_name('task');
 $cat_id = (int) secure_str( (string) $_POST['category_id'], 'dec' );
 $user_id = (int) $_SESSION['id'];
 
-$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE cat_id = {$cat_id} ORDER BY task_priority DESC, task_start DESC");
-$stmt->execute();
+$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE cat_id = :cat_id ORDER BY task_priority DESC, task_start DESC");
+$stmt->execute(array(
+	":cat_id" => $cat_id
+));
 
 while ($task = $stmt->fetch(PDO::FETCH_ASSOC) ) {
 	//Check Task Priority

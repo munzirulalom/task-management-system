@@ -3,9 +3,9 @@
 $errors = [];
 $data = [];
 
-if ( !empty( $_POST['action'] ) AND $_POST['action'] === "add" ) {
+if (!empty($_POST['action']) and $_POST['action'] === "add") {
 
-    if ( empty($_POST['task_name']) or empty($_POST['cat_id']) ) {
+    if (empty($_POST['task_name']) or empty($_POST['cat_id'])) {
         $errors['log'] = 'Form not submit.';
     }
 
@@ -30,21 +30,30 @@ if ( !empty( $_POST['action'] ) AND $_POST['action'] === "add" ) {
     $task_due = (string) $_POST['due_date'];
     $task_note = (string) $_POST['note'];
     $task_priority = (int) $_POST['task_priority'];
-    $assigned_to = (int) get_user_id ( (string) $_POST['assigned_to'] );
-    $cat_id = (int) secure_str( (string) $_POST['cat_id'], 'dec' );
+    $assigned_to = (int) get_user_id((string) $_POST['assigned_to']);
+    $cat_id = (int) secure_str((string) $_POST['cat_id'], 'dec');
     $created_by = (int) $_SESSION['id'];
-    $notification_title = "You have been given a new task on ".get_project_title($cat_id);
+    $notification_title = "You have been given a new task on " . get_project_title($cat_id);
 
     //Inster Data Into Task List Table
-    $stmt = $db->prepare("INSERT INTO `{$table}` (task_title, task_remainder, task_due, task_note, task_priority, assigned_to, cat_id, created_by) VALUES('{$task_title}', '{$task_remainder}', '{$task_due}', '{$task_note}', '{$task_priority}', '{$assigned_to}', '{$cat_id}', '{$created_by}')");
-    $stmt->execute();
+    $stmt = $db->prepare("INSERT INTO `{$table}` (task_title, task_remainder, task_due, task_note, task_priority, assigned_to, cat_id, created_by) VALUES(:task_title, :task_remainder, :task_due, :task_note, :task_priority, :assigned_to, :cat_id, :created_by)");
+    $stmt->execute(array(
+        ":task_title" => $task_title,
+        ":task_remainder" => $task_remainder,
+        ":task_due" => $task_due,
+        ":task_note" => $task_note,
+        ":task_priority" => $task_priority,
+        ":assigned_to" => $assigned_to,
+        ":cat_id" => $cat_id,
+        ":created_by" => $created_by
+    ));
 
-    add_notification( $notification_title, $assigned_to, $cat_id);
+    add_notification($notification_title, $assigned_to, $cat_id);
 
     exit;
-}elseif ( !empty( $_POST['action'] ) AND $_POST['action'] === "update" ) {
+} elseif (!empty($_POST['action']) and $_POST['action'] === "update") {
 
-    if ( empty($_POST['update_task_name']) ) {
+    if (empty($_POST['update_task_name'])) {
         $errors['log'] = 'Form not submit.';
     }
 
@@ -70,13 +79,21 @@ if ( !empty( $_POST['action'] ) AND $_POST['action'] === "add" ) {
     $task_due = (string) $_POST['update_due_date'];
     $task_note = (string) $_POST['update_note'];
     $task_priority = (int) $_POST['update_task_priority'];
-    $assigned_to = (int) get_user_id ( (string) $_POST['update_assigned_to'] );
+    $assigned_to = (int) get_user_id((string) $_POST['update_assigned_to']);
 
-    $redirect_to = secure_str( (string) $_POST['rdir_to'], 'dec' );
+    $redirect_to = secure_str((string) $_POST['rdir_to'], 'dec');
 
     //Inster Data Into Task List Table
-    $stmt = $db->prepare("UPDATE `{$table}` SET task_title = '{$task_title}', task_remainder = '{$task_remainder}', task_due = '{$task_due}', task_note = '{$task_note}', task_priority = '{$task_priority}', assigned_to = '{$assigned_to}' WHERE task_id = '{$task_id}'");
-    $stmt->execute();
+    $stmt = $db->prepare("UPDATE `{$table}` SET task_title = :task_title, task_remainder = :task_remainder, task_due = :task_due, task_note = :task_note, task_priority = :task_priority, assigned_to = :assigned_to WHERE task_id = :task_id");
+    $stmt->execute(array(
+        ":task_title" => $task_title,
+        ":task_remainder" => $task_remainder,
+        ":task_due" => $task_due,
+        ":task_note" => $task_note,
+        ":task_priority" => $task_priority,
+        ":assigned_to" => $assigned_to,
+        ":task_id" => $task_id
+    ));
 
     exit;
 }

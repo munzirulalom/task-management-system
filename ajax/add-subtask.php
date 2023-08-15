@@ -28,7 +28,11 @@ $sub_task_title = (string) $_POST['subtask_title'];
 $created_by = (int) $_SESSION['id'];
 
 //Inster Data Into Sub Task List Table
-$stmt = $db->prepare("INSERT INTO `{$table}` (sub_task_title, task_id, created_by) VALUES('{$sub_task_title}', '{$task_id}', '{$created_by}')");
-$stmt->execute();
+$stmt = $db->prepare("INSERT INTO `{$table}` (sub_task_title, task_id, created_by) VALUES(:sub_task_title, :task_id, :created_by)");
+$stmt->execute(array(
+    ":sub_task_title" => $sub_task_title,
+    ":task_id" => $task_id,
+    ":created_by" => $created_by
+));
 
 exit;

@@ -18,13 +18,17 @@ $table = get_table_name('task');
 
 if ( $status === true) {
 
-	$stmt = $db->prepare("UPDATE `{$table}` SET task_status = 1 WHERE task_id = '{$task_id}'");
-	$stmt->execute();
+	$stmt = $db->prepare("UPDATE `{$table}` SET task_status = 1 WHERE task_id = :task_id");
+	$stmt->execute(array(
+		":task_id" => $task_id
+	));
 
 	exit;
 } elseif ( $status === false ){
-	$stmt = $db->prepare("UPDATE `{$table}` SET task_status = 0 WHERE task_id = '{$task_id}'");
-	$stmt->execute();
+	$stmt = $db->prepare("UPDATE `{$table}` SET task_status = 0 WHERE task_id = :task_id");
+	$stmt->execute(array(
+		":task_id" => $task_id
+	));
 
 	exit;
 } else{

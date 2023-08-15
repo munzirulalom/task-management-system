@@ -13,8 +13,10 @@ if ( $task_id == null ) {
 	return;
 }
 
-$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE task_id = {$task_id}");
-$stmt->execute();
+$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE task_id = :task_id");
+$stmt->execute(array(
+	":task_id" => $task_id
+));
 
 while ($task = $stmt->fetch(PDO::FETCH_ASSOC) ) {
 	if ( $task["sub_task_status"] == 0) {
@@ -67,8 +69,10 @@ echo '<div class="my-5 dropdown-divider"></div>';
 
 //Attachment Listing
 $table = get_table_name('attachment');
-$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE task_id = '{$task_id}'");
-$stmt->execute();
+$stmt = $db->prepare("SELECT * FROM `{$table}` WHERE task_id = :task_id");
+$stmt->execute(array(
+	":task_id" => $task_id
+));
 
 echo '<h5 class="card-title">Attachment</h5>';
 echo '<ul>';
